@@ -30,6 +30,8 @@ void ConnectFour::playGame()
 				cout << "The game is over! Player" << currentPlayer << " has won!\n";
 				isDone = true;
 			}
+
+			//if the gird is fully occupied
 			else if (turn == 42) {
 				cout << "It's a tie!\n";
 				isDone = true;
@@ -65,7 +67,7 @@ int ConnectFour::getXCoord()
 	// check if the input is an integer
 	while (!cin.good()) {
 
-		cout << "Invalid Input! \n";
+		cout << "Invalid Input! A number is required.\n";
 		cin.clear();
 		cin.ignore(10000, '\n');
 		cin >> num;
@@ -75,7 +77,7 @@ int ConnectFour::getXCoord()
     //check if the number is inside the range
 	while (isInputBad == true) {
 		if (num < 1 || num>7) {
-			cout << "Invalid Input!\n";
+			cout << "Invalid Input! Choose a number from 1 to 7.\n";
 		}
 		else {
 			isInputBad = false;
