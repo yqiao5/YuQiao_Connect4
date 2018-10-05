@@ -100,8 +100,7 @@ bool ConnectFour::placeMarker(int x, char currentPlayer)
 			i--;
 			board[i][x] = currentPlayer;
 			return i;
-		}
-		
+		}	
 		else {
 			return false;
 		}
@@ -149,7 +148,6 @@ bool ConnectFour::checkForVictory(char currentPlayer)
 
 	return false;
 }
-
 
 void ConnectFour::clearBoard()
 {
