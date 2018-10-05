@@ -22,7 +22,7 @@ void ConnectFour::playGame()
 
 
 		if (placeMarker(x, currentPlayer) == false) {
-			cout << "That spot is occupied!\n";
+			cout << "This column is occupied!\n";
 		}
 		else {
 			turn++;
@@ -57,27 +57,34 @@ ConnectFour::ConnectFour()
 int ConnectFour::getXCoord()
 {
 	bool isInputBad = true;
-	int x;
+	int num;
 
+	cout << "Choose a column to drop your piece:";
+	cin >> num;
+
+	// check if the input is an integer
+	while (!cin.good()) {
+
+		cout << "Invalid Input! \n";
+		cin.clear();
+		cin.ignore(10000, '\n');
+		cin >> num;
+	}
+
+
+    //check if the number is inside the range
 	while (isInputBad == true) {
-
-		cout << "Enter the X coordinate:";
-		cin >> x;
-
-		if (x < 1 || x>7) {
-			cout << "Invalid Coordinate!\n";
+		if (num < 1 || num>7) {
+			cout << "Invalid Input!\n";
 		}
 		else {
 			isInputBad = false;
 		}
 	}
 
-	return x - 1;
+	return num - 1;
 }
-//int TicTacToeGame::getYCoord(int x) {
-//	
-//
-//}
+
 
 bool ConnectFour::placeMarker(int x, char currentPlayer)
 {
@@ -94,6 +101,7 @@ bool ConnectFour::placeMarker(int x, char currentPlayer)
 			board[i][x] = currentPlayer;
 			return i;
 		}
+		
 		else {
 			return false;
 		}
