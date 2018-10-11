@@ -11,28 +11,30 @@ void ConnectFour::playGame()
 
 	char currentPlayer = 'X';
 	bool isDone = false;
+	
 
 	int x;
 
-	int turn = 0;
+	
 
 	while (isDone == false) {
 		printBoard();
 		x = getXCoord();
 
 
-		if (placeMarker(x, currentPlayer) == false) {
-			cout << "This column is occupied!\n";
+		if (placeMarker(x, currentPlayer,player1,player2) == false) {
+			cout << "This column is occupied!\n Skip to the next player! \n";
 		}
 		else {
-			turn++;
+			
+			
 			if (checkForVictory(currentPlayer) == true) {
 				cout << "The game is over! Player" << currentPlayer << " has won!\n";
 				isDone = true;
 			}
 
 			//if the gird is fully occupied
-			else if (turn == 42) {
+			else if (checkTie() == true) {
 				cout << "It's a tie!\n";
 				isDone = true;
 			}
@@ -78,6 +80,7 @@ int ConnectFour::getXCoord()
 	while (isInputBad == true) {
 		if (num < 1 || num>7) {
 			cout << "Invalid Input! Choose a number from 1 to 7.\n";
+			break;
 		}
 		else {
 			isInputBad = false;
@@ -88,7 +91,7 @@ int ConnectFour::getXCoord()
 }
 
 
-bool ConnectFour::placeMarker(int x, char currentPlayer)
+bool ConnectFour::placeMarker(int x, char currentPlayer, char player1, char player2)
 {
 	if (x >= 0 && x <= 6) {
 		if (board[0][x] == '.') {
@@ -103,11 +106,11 @@ bool ConnectFour::placeMarker(int x, char currentPlayer)
 			board[i][x] = currentPlayer;
 			return i;
 		}	
-		else {
-			return false;
-		}
+		else { return false; }
 	}
 }
+
+
 
 bool ConnectFour::checkForVictory(char currentPlayer)
 {
@@ -130,8 +133,8 @@ bool ConnectFour::checkForVictory(char currentPlayer)
 	}
 
 	//check top left diagonal
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 3; j++) {
+	for (int j = 0; j < 4; j++) {
+		for (int i = 0; i < 3; i++) {
 			if (board[i][j] == currentPlayer && (board[i][j] == board[i + 1][j + 1]) && (board[i + 1][j + 1] == board[i + 2][j + 2]) && (board[i + 2][j + 2] == board[i + 3][j + 3])) {
 				return true;
 			}
@@ -140,15 +143,24 @@ bool ConnectFour::checkForVictory(char currentPlayer)
 
 
 	//check top right digonal
-	for (int i = 6; i > 2; i--) {
-		for (int j = 0; j < 3; j++) {
-			if (board[i][j] == currentPlayer && (board[i][j] == board[i - 1][j + 1]) && (board[i - 1][j + 1] == board[i - 2][j + 2]) && (board[i - 2][j + 2] == board[i - 3][j + 3])) {
+	for (int j = 6; j > 2; j--) {
+		for (int i = 0; i < 3; i++) {
+			if (board[i][j] == currentPlayer && (board[i][j] == board[i + 1][j - 1]) && (board[i + 1][j - 1] == board[i + 2][j - 2]) && (board[i + 2][j - 2] == board[i + 3][j - 3])) {
 				return true;
 			}
 		}
 	}
 
 	return false;
+}
+
+// check tie
+bool ConnectFour::checkTie()
+{	
+	if (board[0][1] != '.'&&board[0][2] != '.'&&board[0][3] != '.'&&board[0][4] != '.'&&board[0][5] != '.'&&board[0][6] != '.')
+	{
+		return true;
+	}
 }
 
 void ConnectFour::clearBoard()
