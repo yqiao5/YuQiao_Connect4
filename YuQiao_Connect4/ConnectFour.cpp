@@ -12,45 +12,55 @@ void ConnectFour::playGame()
 	char currentPlayer = 'X';
 	bool isDone = false;
 	
-
 	int x;
-
-	
 
 	while (isDone == false) {
 		printBoard();
 		x = getXCoord();
 
-
-		if (placeMarker(x, currentPlayer,player1,player2) == false) {
+		if (placeMarker(x, currentPlayer, player1, player2) == false) {
 			cout << "This column is occupied!\n Skip to the next player! \n";
 		}
 		else {
-			
-			
+			//cout << x;
 			if (checkForVictory(currentPlayer) == true) {
 				cout << "The game is over! Player" << currentPlayer << " has won!\n";
 				isDone = true;
 			}
 
-			//if the gird is fully occupied
-			else if (checkTie() == true) {
+			if (0 <= x && x <= 6) {
+				
+				if (currentPlayer == player1) {
+					currentPlayer = player2;
+				}
+				else  {
+					currentPlayer = player1;
+				}
+			}
+
+			if (checkTie() == true) {
 				cout << "It's a tie!\n";
 				isDone = true;
 			}
 
+			//if the gird is fully occupied
+		
+
 			// Switch player
-			if (currentPlayer == player1) {
-				currentPlayer = player2;
-			}
-			else {
-				currentPlayer = player1;
-			}
 
 		};
+
+	/*	if (currentPlayer == player1) {
+			currentPlayer = player2;
+		}
+		else {
+			currentPlayer = player1;
+		}*/
+
 	}
 	printBoard();
 }
+
 
 
 ConnectFour::ConnectFour()
@@ -100,11 +110,11 @@ bool ConnectFour::placeMarker(int x, char currentPlayer, char player1, char play
 
 				if (i == 5) {
 					board[i][x] = currentPlayer;
-					return i;
+					return true;
 				}
 			i--;
 			board[i][x] = currentPlayer;
-			return i;
+			return true;
 		}	
 		else { return false; }
 	}
@@ -157,7 +167,7 @@ bool ConnectFour::checkForVictory(char currentPlayer)
 // check tie
 bool ConnectFour::checkTie()
 {	
-	if (board[0][1] != '.'&&board[0][2] != '.'&&board[0][3] != '.'&&board[0][4] != '.'&&board[0][5] != '.'&&board[0][6] != '.')
+	if (board[0][0] != '.' && board[0][1] != '.'&&board[0][2] != '.'&&board[0][3] != '.'&&board[0][4] != '.'&&board[0][5] != '.'&&board[0][6] != '.')
 	{
 		return true;
 	}
